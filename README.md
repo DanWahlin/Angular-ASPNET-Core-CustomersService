@@ -1,1 +1,1 @@
-# Angular-ASPNET-Core-CustomersService
+# Angular, ASP.NET Core Customers Service Application
