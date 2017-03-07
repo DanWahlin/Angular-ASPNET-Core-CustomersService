@@ -21,31 +21,28 @@ namespace Angular_ASPNETCore_CustomersService.Controllers
             _Logger = loggerFactory.CreateLogger(nameof(CustomersController));
         }
 
-        // GET api/customersservice/customers
+        // GET api/customers
         [HttpGet]
         [ProducesResponseType(typeof(List<Customer>), 200)]
-        [ProducesResponseType(typeof(List<Customer>), 404)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> Customers()
         {
             try
             {
                 var customers = await _CustomersRepository.GetCustomersAsync();
-                if (customers == null)
-                {
-                    return NotFound();
-                }
                 return Ok(customers);
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest();
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
+        // GET api/customers/page/10/10
         [HttpGet("page/{skip}/{take}")]
         [ProducesResponseType(typeof(List<Customer>), 200)]
-        [ProducesResponseType(typeof(List<Customer>), 404)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> CustomersPage(int skip, int take)
         {
             try
@@ -57,68 +54,65 @@ namespace Angular_ASPNETCore_CustomersService.Controllers
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return this.BadRequest();
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
-        // GET api/customersservice/customers/5
-        [HttpGet("{id}")]
+        // GET api/customers/5
+        [HttpGet("{id}", Name = "GetCustomerRoute")]
         [ProducesResponseType(typeof(Customer), 200)]
-        [ProducesResponseType(typeof(Customer), 404)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> Customers(int id)
         {
             try
             {
                 var customer = await _CustomersRepository.GetCustomerAsync(id);
-                if (customer == null)
-                {
-                    return NotFound();
-                }
                 return Ok(customer);
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return this.BadRequest();
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
         // POST api/customers
-        [HttpPost()]
-        [ProducesResponseType(typeof(Customer), 201)]
-        [ProducesResponseType(typeof(string), 400)]
+        [HttpPost]
+        [ProducesResponseType(typeof(ApiResponse), 201)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> PostCustomer([FromBody]Customer customer)
         {
-          if (!ModelState.IsValid) {
-            return BadRequest(this.ModelState);
-          }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse { Status = false, ModelState = ModelState });
+            }
 
             try
             {
                 var newCustomer = await _CustomersRepository.InsertCustomerAsync(customer);
                 if (newCustomer == null)
                 {
-                    return BadRequest(new { status = false });
+                    return BadRequest(new ApiResponse { Status = false });
                 }
-                return CreatedAtRoute("GetCustomersRoute", new { id = newCustomer.Id }, 
-                        new { status= true, customer= newCustomer });
+                return CreatedAtRoute("GetCustomerRoute", new { id = newCustomer.Id },
+                        new ApiResponse { Status = true, Customer = newCustomer });
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new { status = false });
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
-        // PUT api/customersservice/customers/5
+        // PUT api/customers/5
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(bool), 200)]
-        [ProducesResponseType(typeof(bool), 400)]
+        [ProducesResponseType(typeof(ApiResponse), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> PutCustomer(int id, [FromBody]Customer customer)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(this.ModelState);
+                return BadRequest(new ApiResponse { Status = false, ModelState = ModelState });
             }
 
             try
@@ -126,21 +120,21 @@ namespace Angular_ASPNETCore_CustomersService.Controllers
                 var status = await _CustomersRepository.UpdateCustomerAsync(customer);
                 if (!status)
                 {
-                    return BadRequest(new { status = false });
+                    return BadRequest(new ApiResponse { Status = false });
                 }
-                return Ok(new { status, customer });
+                return Ok(new ApiResponse { Status = true, Customer = customer });
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new { status = false });
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
-        // DELETE api/customersservice/customers/5
+        // DELETE api/customers/5
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(bool), 200)]
-        [ProducesResponseType(typeof(bool), 404)]
+        [ProducesResponseType(typeof(ApiResponse), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
         public async Task<ActionResult> DeleteCustomer(int id)
         {
             try
@@ -148,39 +142,16 @@ namespace Angular_ASPNETCore_CustomersService.Controllers
                 var status = await _CustomersRepository.DeleteCustomerAsync(id);
                 if (!status)
                 {
-                    return NotFound(new { status = false });
+                    return BadRequest(new ApiResponse { Status = false });
                 }
-                return Ok(new { status });
+                return Ok(new ApiResponse { Status = true });
             }
             catch (Exception exp)
             {
                 _Logger.LogError(exp.Message);
-                return BadRequest(new { status = false });
+                return BadRequest(new ApiResponse { Status = false });
             }
         }
 
-    }
-
-    public static class HttpRequestExtensions
-    {
-        public static Uri ToUri(this HttpRequest request)
-        {
-            var hostComponents = request.Host.ToUriComponent().Split(':');
-
-            var builder = new UriBuilder
-            {
-                Scheme = request.Scheme,
-                Host = hostComponents[0],
-                Path = request.Path,
-                Query = request.QueryString.ToUriComponent()
-            };
-
-            if (hostComponents.Length == 2)
-            {
-                builder.Port = Convert.ToInt32(hostComponents[1]);
-            }
-
-            return builder.Uri;
-        }
     }
 }
