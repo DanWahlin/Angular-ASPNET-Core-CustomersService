@@ -1,33 +1,29 @@
-# Angular 2, NodeJS, MongoDB Customers Service
+# Angular (v4+) and ASP.NET Core Customers Service
 
-This project provides a look at getting started using Angular 2 Http functionality and how it can be used
-to call a Node.js RESTful service.  
+This project provides a look at getting started using Angular Http functionality and how it can be used
+to call a ASP.NET Core RESTful service.  
 
-## Angular 2 Concepts Covered
+## Angular Concepts Covered
 
 * Using TypeScript classes and modules
 * Modules are loaded with System.js
 * Using Custom Components
 * Using the Http object for Ajax calls along with RxJS observables
 * Performing GET, PUT, POST and DELETE requests to the server
-* Working with Angular 2 service classes for Ajax calls
-* Using Angular 2 databinding and built-in directives
+* Working with Angular service classes for Ajax calls
+* Using Angular databinding and built-in directives
 
 ## Software Requirements To Run Locally (there's a Docker option below as well)
 
-* Node.js 6.5.0 or higher
-* MongoDB 3.2 or higher
+* ASP.NET Core SDK 1.0 or higher
+* Visual Studio 2017 Community (or higher)
+* Node.js 6.9 or higher
 
-### Running the Application Locally
+### Running the Application Locally on Windows
 
-1. Install Node.js (6.5 or higher) and MongoDB (3.2 or higher) on your dev box
+1. Open the .sln file in Visual Studio
 
-    * Node.js: https://nodejs.org
-    * MongoDB: https://docs.mongodb.com/manual/installation
-
-1. Execute `mongod` to start the MongoDB daemon if it's not already running
-
-1. Install Nodemon and Gulp: `npm install nodemon gulp -g`
+1. Install Gulp: `npm install nodemon gulp -g`
 
 1. Run `npm install` to install app dependencies
 
@@ -35,15 +31,13 @@ to call a Node.js RESTful service.
 
     `gulp copy:libs`
 
-1. Run `npm start` to compile the TypeScript and start the server
+1. Start the application (F5)
 
-1. Browse to http://localhost:3000
+1. Browse to http://localhost:5000
 
 ## Running the Application with Docker
 
-1. Install Node.js (6.5 or higher) and Docker for Mac/Windows or Docker Toolbox - https://www.docker.com/products/overview
-
-1. Open `config/config.development.json` and change the host from `localhost` to `mongodb`
+1. Install Docker for Mac/Windows or Docker Toolbox - https://www.docker.com/get-docker
 
 1. Install Gulp: `npm install gulp -g`
 
@@ -53,12 +47,12 @@ to call a Node.js RESTful service.
 
 1. Run `npm run tsc:w` to compile TypeScript to JavaScript locally (leave the window running). This is only needed when in "dev" mode.
 
-1. Open another command window and navigate to this application's root folder in the command window
+1. Open another command window and navigate to this application's root folder in the command window (where docker-compose.yml lives)
 
 1. Run `docker-compose build` to build the images
 
 1. Run `docker-compose up` to run the containers
 
-1. Navigate to http://localhost:3000 if using Docker for Mac/Windows or http://192.168.99.100:3000 if using Docker Toolbox in a browser
+1. Navigate to http://localhost:5000 if using Docker for Mac/Windows or http://192.168.99.100:5000 if using Docker Toolbox in a browser
 
 

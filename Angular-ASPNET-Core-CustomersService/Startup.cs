@@ -13,6 +13,7 @@ using Swashbuckle.Swagger.Model;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.NodeServices;
 using System.IO;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Angular_ASPNETCore_CustomersService
 {
@@ -46,7 +47,7 @@ namespace Angular_ASPNETCore_CustomersService
             
             //Add SqLite support
             services.AddEntityFrameworkSqlite()
-                .AddDbContext<Repository.CustomersDbContext>(options =>
+                .AddDbContext<CustomersDbContext>(options =>
                    options.UseSqlite(Configuration["Data:DbContext:CustomersSqliteConnectionString"]));
 
             services.AddMvc();
@@ -55,8 +56,8 @@ namespace Angular_ASPNETCore_CustomersService
             services.AddScoped<IStatesRepository, StatesRepository>();
             services.AddTransient<CustomersDbSeeder>();
 
-            //Nice article by Shayne Boyer here on Swagger:
             //https://docs.asp.net/en/latest/tutorials/web-api-help-pages-using-swagger.html
+            //View the docs by going to http://localhost:5000/swagger
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
@@ -71,6 +72,7 @@ namespace Angular_ASPNETCore_CustomersService
                 });
 
                 //Enable following for XML comment support 
+                //Useful when you want to add more details into the Swagger docs that are generated
 
                 //Base app path 
                 //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
