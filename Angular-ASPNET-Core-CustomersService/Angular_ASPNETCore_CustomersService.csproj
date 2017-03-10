@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\home.html" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
