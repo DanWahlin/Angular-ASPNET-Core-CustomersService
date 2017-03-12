@@ -30,7 +30,6 @@
     "zone.js": "^0.7.7"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.35",
     "@types/node": "^7.0.5",
     "typescript": "2.2.1",
 
