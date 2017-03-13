@@ -14,6 +14,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.NodeServices;
 using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Http;
 
 namespace Angular_ASPNETCore_CustomersService
 {
@@ -52,6 +54,11 @@ namespace Angular_ASPNETCore_CustomersService
 
             services.AddMvc();
 
+            //Handle XSRF Names for Cookie and Header
+            services.AddAntiforgery(options => {
+                options.HeaderName = "X-XSRF-TOKEN";
+            });
+
             services.AddScoped<ICustomersRepository, CustomersRepository>();
             services.AddScoped<IStatesRepository, StatesRepository>();
             services.AddTransient<CustomersDbSeeder>();
@@ -84,10 +91,29 @@ namespace Angular_ASPNETCore_CustomersService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CustomersDbSeeder customersDbSeeder)
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            ILoggerFactory loggerFactory, 
+            CustomersDbSeeder customersDbSeeder,
+            IAntiforgery antiforgery)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.Use((context, next) =>
+            {
+                if (context.Request.Method == HttpMethods.Get &&
+                    (string.Equals(context.Request.Path.Value, "/", StringComparison.OrdinalIgnoreCase) ||
+                     string.Equals(context.Request.Path.Value, "/home/index", StringComparison.OrdinalIgnoreCase)))
+                {
+                    var tokens = antiforgery.GetAndStoreTokens(context);
+                    context.Response.Cookies.Append("XSRF-TOKEN", 
+                        tokens.RequestToken,
+                        new CookieOptions() { HttpOnly = false });
+                }
+
+                return next();
+            });
 
             // Serve wwwroot as root
             app.UseFileServer();

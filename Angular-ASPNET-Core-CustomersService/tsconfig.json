@@ -16,6 +16,7 @@
   },
   "exclude": [
     "node_modules",
+    "wwwroot/lib",
     "wwwroot/app/main.aot.ts"
   ]
 }

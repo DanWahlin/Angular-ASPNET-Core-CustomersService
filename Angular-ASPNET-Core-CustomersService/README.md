@@ -1,4 +1,4 @@
-# Angular (v4+) and ASP.NET Core Customers Service
+# Angular and ASP.NET Core Customers Service
 
 This project provides a look at getting started using Angular Http functionality and how it can be used
 to call a ASP.NET Core RESTful service.  
@@ -13,10 +13,10 @@ to call a ASP.NET Core RESTful service.
 * Working with Angular service classes for Ajax calls
 * Using Angular databinding and built-in directives
 
-## Software Requirements To Run Locally (there's a Docker option below as well)
+## Software Requirements To Run Locally
 
-* ASP.NET Core SDK 1.0 or higher
-* Visual Studio 2017 Community (or higher)
+* Visual Studio 2017 Community (or higher) for Windows. Any editor on Mac.
+* ASP.NET Core SDK 1.0 or higher - http://dot.net 
 * Node.js 6.9 or higher
 
 ### Running the Application Locally on Windows

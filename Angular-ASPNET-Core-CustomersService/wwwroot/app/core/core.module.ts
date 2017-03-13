@@ -1,5 +1,5 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { HttpModule, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
+import { HttpModule, Request, XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 import { DataService } from './data.service';
 import { DataFilterService } from './data-filter.service';
@@ -22,6 +22,35 @@ export class CoreModule extends EnsureModuleLoadedOnceGuard {    //Ensure that C
   }  
 
 }
+
+//Example of a custom XSRF class
+//export class MyCookieXSRFStrategy implements XSRFStrategy {
+//    constructor(
+//        private _cookieName: string = 'XSRF-TOKEN', private _headerName: string = 'X-XSRF-TOKEN') { }
+
+//    private getCookie(name: string) {
+//        let ca: Array<string> = document.cookie.split(';');
+//        let caLen: number = ca.length;
+//        let cookieName = name + "=";
+//        let c: string;
+
+//        for (let i: number = 0; i < caLen; i += 1) {
+//            c = ca[i].replace(/^\s\+/g, "");
+//            if (c.indexOf(cookieName) == 0) {
+//                return c.substring(cookieName.length, c.length);
+//            }
+//        }
+//        return "";
+//    }
+
+//    configureRequest(req: Request) {
+//        let xsrfToken = this.getCookie(this._cookieName);
+//        alert(xsrfToken);
+//        if (xsrfToken) {
+//            req.headers.set(this._headerName, xsrfToken);
+//        }
+//    }
+//}
 
 
 
