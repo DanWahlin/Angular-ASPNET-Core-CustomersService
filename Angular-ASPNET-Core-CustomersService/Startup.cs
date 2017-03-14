@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Angular_ASPNETCore_CustomersService.Repository;
 using Swashbuckle.Swagger.Model;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.NodeServices;
 using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.AspNetCore.Antiforgery;
@@ -54,7 +53,7 @@ namespace Angular_ASPNETCore_CustomersService
 
             services.AddMvc();
 
-            //Handle XSRF Names for Cookie and Header
+            //Handle XSRF Name for Header
             services.AddAntiforgery(options => {
                 options.HeaderName = "X-XSRF-TOKEN";
             });
@@ -100,6 +99,8 @@ namespace Angular_ASPNETCore_CustomersService
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            //Manually handle setting XSRF cookie. Needed because HttpOnly has to be set to false so that
+            //Angular is able to read/access the cookie.
             app.Use((context, next) =>
             {
                 if (context.Request.Method == HttpMethods.Get &&

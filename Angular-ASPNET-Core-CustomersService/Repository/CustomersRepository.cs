@@ -79,7 +79,11 @@ namespace Angular_ASPNETCore_CustomersService.Repository
         public async Task<bool> DeleteCustomerAsync(int id)
         {
             //Extra hop to the database but keeps it nice and simple for this demo
-            var customer = await _Context.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            //Including orders since there's a foreign-key constraint and we need
+            //to remove the orders in addition to the customer
+            var customer = await _Context.Customers
+                                .Include(c => c.Orders)
+                                .SingleOrDefaultAsync(c => c.Id == id);
             _Context.Remove(customer);
             try
             {
