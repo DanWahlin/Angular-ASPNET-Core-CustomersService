@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CustomersComponent } from './customers/customers.component';
@@ -13,7 +14,10 @@ const routes: Routes = [
   { path: '**', pathMatch:'full', redirectTo: '/customers' } //catch any unfound routes and redirect to home page
 ];
 
-export const appRouting: IRouting = { 
-    routes: RouterModule.forRoot(routes),
-    components: [ CustomersComponent, CustomerEditComponent, CustomerEditReactiveComponent, CustomersGridComponent ]
-};
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {
+    static components = [ CustomersComponent, CustomersGridComponent, CustomerEditComponent, CustomerEditReactiveComponent ];
+}

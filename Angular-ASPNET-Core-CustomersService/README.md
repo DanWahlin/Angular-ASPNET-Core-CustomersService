@@ -23,7 +23,7 @@ to call a ASP.NET Core RESTful service.
 
 1. Open the .sln file in Visual Studio
 
-1. Install Gulp: `npm install nodemon gulp -g`
+1. Install Gulp: `npm install gulp -g`
 
 1. Run `npm install` to install app dependencies
 
