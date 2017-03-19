@@ -2,7 +2,7 @@
   "name": "angular-aspnetcore-customersservice",
   "version": "1.0.0",
   "repository": {
-      "url": "https://github.com/DanWahlin/Angular2-NodeJS-MongoDB-CustomersService"
+    "url": "https://github.com/DanWahlin/Angular-ASPNET-Core-CustomersService"
   },
   "license": "MIT",
   "scripts": {
