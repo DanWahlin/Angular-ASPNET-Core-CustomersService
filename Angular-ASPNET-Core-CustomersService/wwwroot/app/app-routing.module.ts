@@ -5,7 +5,6 @@ import { CustomersComponent } from './customers/customers.component';
 import { CustomersGridComponent } from './customers/customers-grid.component';
 import { CustomerEditComponent } from './customers/customer-edit.component';
 import { CustomerEditReactiveComponent } from './customers/customer-edit-reactive.component';
-import { IRouting } from './shared/interfaces';
 
 const routes: Routes = [
   { path: 'customers', component: CustomersComponent},
