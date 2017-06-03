@@ -37,19 +37,19 @@ namespace Angular_ASPNETCore_CustomersService
         public void ConfigureServices(IServiceCollection services)
         {
             //Add PostgreSQL support
-            //services.AddEntityFrameworkNpgsql()
-            //  .AddDbContext<CustomersDbContext>(options =>
-            //     options.UseNpgsql(Configuration["Data:DbContext:CustomersPostgresConnectionString"]));
+            //services.AddDbContext<CustomersDbContext>(options => {
+            //    options.UseNpgsql(Configuration.GetConnectionString("CustomersPostgresConnectionString"));
+            //});
 
             //Add SQL Server support
-            //services.AddEntityFrameworkSqlServer()
-            //    .AddDbContext<CustomersDbContext>(options =>
-            //       options.UseSqlServer(Configuration["Data:DbContext:CustomersSqlServerConnectionString"]));
-            
+            //services.AddDbContext<CustomersDbContext>(options => {
+            //    options.UseSqlServer(Configuration.GetConnectionString("CustomersSqlServerConnectionString"));
+            //});
+
             //Add SqLite support
-            services.AddEntityFrameworkSqlite()
-                .AddDbContext<CustomersDbContext>(options =>
-                   options.UseSqlite(Configuration["Data:DbContext:CustomersSqliteConnectionString"]));
+            services.AddDbContext<CustomersDbContext>(options => {
+                options.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
+            });
 
             services.AddMvc();
 

@@ -116,7 +116,7 @@ export class DataService {
           // Use the following instead if using lite-server
           //return Observable.throw(err.text() || 'backend server error');
         }
-        return Observable.throw(error || 'Node.js server error');
+        return Observable.throw(error || 'ASP.NET Core server error');
     }
 
 }

@@ -8,7 +8,7 @@ import { ICustomer, IOrder, IPagedResults } from '../shared/interfaces';
 @Component({ 
   moduleId: module.id,
   selector: 'customers', 
-  templateUrl: 'customers.component.html'
+  templateUrl: './customers.component.html'
 })
 export class CustomersComponent implements OnInit {
 
