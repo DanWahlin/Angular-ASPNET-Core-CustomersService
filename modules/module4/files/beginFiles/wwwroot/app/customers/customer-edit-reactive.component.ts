@@ -73,12 +73,8 @@ export class CustomerEditReactiveComponent implements OnInit {
 
         value.id = this.customer.id;
         value.zip = this.customer.zip || 0;
-        // var customer: ICustomer = {
-        //   id: this.customer.id,
-        // };
 
         if (value.id) {
-
 
 
         } else {
