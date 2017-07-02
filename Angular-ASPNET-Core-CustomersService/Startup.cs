@@ -63,7 +63,7 @@ namespace Angular_ASPNETCore_CustomersService
             services.AddTransient<CustomersDbSeeder>();
 
             //https://docs.asp.net/en/latest/tutorials/web-api-help-pages-using-swagger.html
-            //View the docs by going to http://localhost:5000/swagger
+            //View the docs by going to http://localhost:5000/swagger/ui/index.html
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {

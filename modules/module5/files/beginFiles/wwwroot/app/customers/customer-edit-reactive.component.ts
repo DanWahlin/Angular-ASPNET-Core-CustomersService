@@ -9,7 +9,7 @@ import { ValidationService } from '../shared/validation.service';
 @Component({
     moduleId: module.id,
     selector: 'customer-edit-reactive',
-    templateUrl: './customer-edit-reactive.component.html' 
+    templateUrl: './customer-edit-reactive.component.html'
 })
 export class CustomerEditReactiveComponent implements OnInit {
 
@@ -70,21 +70,23 @@ export class CustomerEditReactiveComponent implements OnInit {
     }
 
     submit({ value, valid }: { value: ICustomer, valid: boolean }) {
-
         value.id = this.customer.id;
         value.zip = this.customer.zip || 0;
-        // var customer: ICustomer = {
-        //   id: this.customer.id,
-        // };
 
         if (value.id) {
 
 
-
         } else {
-
-
-
+            this.dataService.insertCustomer(value)
+                .subscribe((customer: ICustomer) => {
+                    if (customer) {
+                        this.router.navigate(['/customers']);
+                    } else {
+                        this.errorMessage = 'Unable to add customer';
+                    }
+        
+                },
+                (err: any) => console.log(err));
         }
     }
 

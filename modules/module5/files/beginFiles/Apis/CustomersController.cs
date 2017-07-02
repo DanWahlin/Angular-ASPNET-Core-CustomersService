@@ -15,13 +15,13 @@ namespace Angular_ASPNETCore_CustomersService.Apis
         ICustomersRepository _CustomersRepository;
         ILogger _Logger;
 
-        public CustomersApiController(ICustomersRepository customersRepo, ILoggerFactory loggerFactory)
-        {
+        public CustomersApiController(ICustomersRepository customersRepo, ILoggerFactory loggerFactory) {
             _CustomersRepository = customersRepo;
             _Logger = loggerFactory.CreateLogger(nameof(CustomersApiController));
         }
 
-        [HttpGet] 
+        // GET api/customers
+        [HttpGet]
         [NoCache]
         [ProducesResponseType(typeof(List<Customer>), 200)]
         [ProducesResponseType(typeof(ApiResponse), 400)]
@@ -39,6 +39,7 @@ namespace Angular_ASPNETCore_CustomersService.Apis
             }
         }
 
+        // GET api/customers/5
         [HttpGet("{id}", Name = "GetCustomerRoute")]
         [NoCache]
         [ProducesResponseType(typeof(Customer), 200)]
@@ -49,6 +50,34 @@ namespace Angular_ASPNETCore_CustomersService.Apis
             {
                 var customer = await _CustomersRepository.GetCustomerAsync(id);
                 return Ok(customer);
+            }
+            catch (Exception exp)
+            {
+                _Logger.LogError(exp.Message);
+                return BadRequest(new ApiResponse { Status = false });
+            }
+        }
+
+        // POST api/customers
+        [HttpPost]
+        [ProducesResponseType(typeof(ApiResponse), 201)]
+        [ProducesResponseType(typeof(ApiResponse), 400)]
+        public async Task<ActionResult> CreateCustomer([FromBody]Customer customer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse { Status = false, ModelState = ModelState });
+            }
+
+            try
+            {
+                var newCustomer = await _CustomersRepository.InsertCustomerAsync(customer);
+                if (newCustomer == null)
+                {
+                    return BadRequest(new ApiResponse { Status = false });
+                }
+                return CreatedAtRoute("GetCustomerRoute", new { id = newCustomer.Id },
+                        new ApiResponse { Status = true, Customer = newCustomer });
             }
             catch (Exception exp)
             {
