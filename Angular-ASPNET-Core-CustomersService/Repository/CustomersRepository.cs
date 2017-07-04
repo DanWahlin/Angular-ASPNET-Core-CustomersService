@@ -32,6 +32,7 @@ namespace Angular_ASPNETCore_CustomersService.Repository
             var customers = await _Context.Customers
                                  .OrderBy(c => c.LastName)
                                  .Include(c => c.State)
+                                 .Include(c => c.Orders)
                                  .Skip(skip)
                                  .Take(take)
                                  .ToListAsync();
