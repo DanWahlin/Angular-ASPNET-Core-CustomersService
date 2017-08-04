@@ -27,7 +27,7 @@ to call a ASP.NET Core RESTful service.
 
 1. Run `npm install` to install app dependencies
 
-1. Run the following Gulp task to copy required Angular modules into the `public` folder: 
+1. Run the following Gulp task to copy required Angular modules into the `wwwroot` folder: 
 
     `gulp copy:libs`
 
@@ -43,7 +43,7 @@ to call a ASP.NET Core RESTful service.
 
 1. Run `npm install` to install app dependencies
 
-1. Run the following Gulp task to copy required Angular modules into the `public` folder: 
+1. Run the following Gulp task to copy required Angular modules into the `wwwroot` folder: 
 
     `gulp copy:libs`
 
