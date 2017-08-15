@@ -16,7 +16,7 @@ to call a ASP.NET Core RESTful service.
 ## Software Requirements To Run Locally
 
 * Visual Studio 2017 Community (or higher) for Windows. Any editor on Mac.
-* ASP.NET Core SDK 1.0 or higher - http://dot.net 
+* ASP.NET Core SDK 2.0 or higher - http://dot.net 
 * Node.js 6.10 or higher
 
 ### Running the Application Locally on Windows
@@ -75,8 +75,26 @@ to call a ASP.NET Core RESTful service.
 
 1. Run `docker-compose build` to build the images
 
-1. Run `docker-compose up` to run the containers
+1. Run `docker-compose up` to run the containers. A volume will be created that points back to your source code to make it easy to change code.
 
 1. Navigate to http://localhost:5000 if using Docker for Mac/Windows or http://192.168.99.100:5000 if using Docker Toolbox in a browser
+
+### Using Webpack
+
+1. Do a global search and replace in the project to comment out all references to moduleId in each component since it isn't used by webpack:        
+     Find: moduleId: module.id,
+
+     Replace with: //moduleId: module.id,
+
+1. Run `npm run webpack-build-watch`
+
+1. The webpack bundle scripts will be added into wwwroot/devDist. Open Views/Shared/_Layout.cshtml and remove the scripts in the head section. Add references to the scripts in wwwroot/devDist to the bottom of _Layout.cshtml (above the closing body tag).
+
+1. To run AOT, set your NODE_ENV variable to `production` and re-run `npm run webpack-build-watch`. You'll need to change the script references in _Layout.cshtml from the devDist to the dist folder.
+
+### Why Isn't the Angular CLI Used for this Project?
+
+The Angular CLI provides a great way to work with Angular projects. However, not every company 
+wants the inner workings of webpack, bundling and AOT hidden (the CLI does allow you to `eject` however to see the webpack file). This project has all of the files out in the "open" so you can see exactly what is going on.
 
 

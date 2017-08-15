@@ -11,9 +11,6 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "angularCompilerOptions": {
-    "genDir": "./wwwroot/app/ngfactory"
-  },
   "exclude": [
     "node_modules",
     "wwwroot/lib",
