@@ -141,7 +141,6 @@ namespace Angular_ASPNETCore_CustomersService
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                //https://github.com/aspnet/JavaScriptServices/blob/dev/samples/angular/MusicStore/Startup.cs
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
 
             });

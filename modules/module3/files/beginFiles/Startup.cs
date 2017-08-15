@@ -2,36 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using Angular_ASPNETCore_CustomersService.Repository;
-using Swashbuckle.Swagger.Model;
 using Microsoft.Extensions.FileProviders;
-using System.IO;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Angular_ASPNETCore_CustomersService.Repository;
 
 namespace Angular_ASPNETCore_CustomersService
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -54,37 +49,30 @@ namespace Angular_ASPNETCore_CustomersService
             services.AddMvc();
 
             //Handle XSRF Name for Header
-            //services.AddAntiforgery(options => {
-            //    options.HeaderName = "X-XSRF-TOKEN";
-            //});
+            // services.AddAntiforgery(options => {
+            //     options.HeaderName = "X-XSRF-TOKEN";
+            // });
 
             services.AddScoped<ICustomersRepository, CustomersRepository>();
             services.AddScoped<IStatesRepository, StatesRepository>();
             services.AddTransient<CustomersDbSeeder>();
 
-            //https://docs.asp.net/en/latest/tutorials/web-api-help-pages-using-swagger.html
-            //View the docs by going to http://localhost:5000/swagger/ui/index.html
-            services.AddSwaggerGen();
-            services.ConfigureSwaggerGen(options =>
+            //https://github.com/domaindrivendev/Swashbuckle.AspNetCore
+            services.AddSwaggerGen(options =>
             {
-                options.SingleApiVersion(new Info
+                options.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
                     Title = "ASP.NET Core Customers API",
-                    Description = "ASP.NET Core Customers Web API documentation",
+                    Description = "ASP.NET Core/Angular Customers Swagger Documentation",
                     TermsOfService = "None",
                     Contact = new Contact { Name = "Dan Wahlin", Url = "http://twitter.com/danwahlin" },
                     License = new License { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
                 });
 
-                //Enable following for XML comment support 
-                //Useful when you want to add more details into the Swagger docs that are generated
-
-                //Base app path 
-                //var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-
-                //Set the comments path for the swagger json and ui.
-                //options.IncludeXmlComments(basePath + "\\yourAPI.xml");
+                //Add XML comment document by uncommenting the following
+                // var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MyApi.xml");
+                // options.IncludeXmlComments(filePath);
 
             });
         }
@@ -92,12 +80,9 @@ namespace Angular_ASPNETCore_CustomersService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
             IHostingEnvironment env, 
-            ILoggerFactory loggerFactory, 
             CustomersDbSeeder customersDbSeeder,
             IAntiforgery antiforgery)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
 
             //Manually handle setting XSRF cookie. Needed because HttpOnly has to be set to false so that
             //Angular is able to read/access the cookie.
@@ -144,7 +129,11 @@ namespace Angular_ASPNETCore_CustomersService
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
-            app.UseSwaggerUi();
+            // Visit http://localhost:5000/swagger
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseMvc(routes =>
             {
@@ -152,7 +141,6 @@ namespace Angular_ASPNETCore_CustomersService
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
-                //https://github.com/aspnet/JavaScriptServices/blob/dev/samples/angular/MusicStore/Startup.cs
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
 
             });
