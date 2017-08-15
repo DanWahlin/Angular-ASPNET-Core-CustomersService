@@ -1,10 +1,15 @@
 const webpack = require('webpack'),
-      webpackMerge = require('webpack-merge'),
-      ExtractTextPlugin = require('extract-text-webpack-plugin'),
-      commonConfig = require('./webpack.common.js'),
-      ngToolsWebpack = require('@ngtools/webpack'),
-      path = require('path'),
-      rootDir = path.resolve(__dirname, '..');
+  webpackMerge = require('webpack-merge'),
+  ExtractTextPlugin = require('extract-text-webpack-plugin'),
+  commonConfig = require('./webpack.common.js'),
+  ngToolsWebpack = require('@ngtools/webpack'),
+  path = require('path'),
+  rootDir = path.resolve(__dirname, '..');
+
+var aotPlugin = new ngToolsWebpack.AotPlugin({
+  tsConfigPath: "./tsconfig.aot.json",
+  entryModule: path.resolve(rootDir, "wwwroot/app/app.module#AppModule"),
+});
 
 const env = process.env.NODE_ENV;
 
@@ -13,7 +18,7 @@ module.exports = webpackMerge(commonConfig, {
     app: './wwwroot/app/main.aot.ts'
   },
   output: {
-    path: path.resolve(rootDir, './wwwroot/dist'),
+    path: path.resolve(rootDir, 'wwwroot/dist'),
     publicPath: '/dist/',
     filename: '[name].js',
     chunkFilename: '[id].chunk.js'
@@ -23,25 +28,26 @@ module.exports = webpackMerge(commonConfig, {
       test: /\.ts$/,
       loader: '@ngtools/webpack'
     }]
-  }, 
+  },
   plugins: [
     //Angular AOT pluging
-    new ngToolsWebpack.AotPlugin({
-        tsConfigPath: './tsconfig.json',
-        entryModule: rootDir + '/wwwroot/app/app.module#AppModule'
-    }),
+    // new ngToolsWebpack.AotPlugin({
+    //     mainPath: "src/app/main.ts",
+    //     tsConfigPath: './tsconfig.aot.json'
+    // }),
+    aotPlugin,
     new webpack.LoaderOptionsPlugin({
-        minimize: true,
-        debug: false
+      minimize: true,
+      debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        },
-        output: {
-            comments: false
-        },
-        sourceMap: false
+      compress: {
+        warnings: false
+      },
+      output: {
+        comments: false
+      },
+      sourceMap: false
     })
   ]
 });
