@@ -18,7 +18,8 @@ gulp.task('copy:vendor', function() {
       nodeModulesPath + '/core-js/client/**/*',
       nodeModulesPath + '/zone.js/dist/zone.js',
       nodeModulesPath + '/systemjs/dist/system-polyfills.js',
-      nodeModulesPath + '/systemjs/dist/system.src.js'
+      nodeModulesPath + '/systemjs/dist/system.src.js',
+      nodeModulesPath + '/tslib/tslib.js'
     ])
     .pipe(gulp.dest(libPath));
 });
