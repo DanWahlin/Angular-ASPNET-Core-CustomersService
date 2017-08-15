@@ -9,6 +9,7 @@ import { TrackByService } from './trackby.service';
 import { EnsureModuleLoadedOnceGuard } from '../shared/ensureModuleLoadedOnceGuard';
 
 @NgModule({
+  //If you're on Angular 4.3 or higher you can use HttpClientModule. See core.module.ts.httpclient
   imports: [ HttpModule, HttpClientModule ],
   providers: [
     //Default XSRF provider setup (change cookie or header name if needed): 

@@ -11,6 +11,8 @@ import { ICustomer, IOrder, IState, IPagedResults } from '../shared/interfaces';
 
 @Injectable()
 export class DataService {
+
+    //If you're on Angular 4.3 or higher you can use HttpClientModule. See data.service.ts.httpclient
   
     baseUrl: string = '/api/customers';
     baseStatesUrl: string = '/api/states'
