@@ -6,7 +6,6 @@ import { DataService } from '../core/data.service';
 import { ICustomer, IOrder, IPagedResults } from '../shared/interfaces';
 
 @Component({ 
-  moduleId: module.id,
   selector: 'customers', 
   templateUrl: './customers.component.html'
 })

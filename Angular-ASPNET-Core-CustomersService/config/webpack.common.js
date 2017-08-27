@@ -28,9 +28,9 @@ module.exports = {
             name: ['app', 'vendor', 'polyfills']
         }),
         //Get settings here: https://github.com/jantimon/html-webpack-plugin
-        // new HtmlWebpackPlugin({
-        //     template: './wwwroot/index.webpack-template.html',
-        //     filename: '../index.html'
-        // })
+        new HtmlWebpackPlugin({
+            template: './wwwroot/home.webpack-template.html',
+            filename: '../home.html'
+        })
     ]
 };

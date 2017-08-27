@@ -12,12 +12,13 @@
     "suppressImplicitAnyIndexErrors": true
   },
 
-  "files": [
-    "wwwroot/app/app.module.ts",
-    "wwwroot/app/main.aot.ts"
+  "exclude": [
+    "./wwwroot/lib",
+    "./node_modules"
   ],
 
   "angularCompilerOptions": {
-   "genDir": "./wwwroot/aot"
+   "genDir": "./wwwroot/aot",
+   "entryModule": "./wwwroot/app/app.module#AppModule"
  }
 }

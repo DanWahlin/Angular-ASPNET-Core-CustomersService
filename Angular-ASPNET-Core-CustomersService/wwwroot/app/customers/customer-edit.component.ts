@@ -5,7 +5,6 @@ import { DataService } from '../core/data.service';
 import { ICustomer, IState } from '../shared/interfaces';
 
 @Component({
-  moduleId: module.id,
   selector: 'customer-edit',
   templateUrl: './customer-edit.component.html'
 })

@@ -7,7 +7,6 @@ import { ICustomer, IState } from '../shared/interfaces';
 import { ValidationService } from '../shared/validation.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'customer-edit-reactive',
   templateUrl: './customer-edit-reactive.component.html'
 })

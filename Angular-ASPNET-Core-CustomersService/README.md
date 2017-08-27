@@ -81,16 +81,11 @@ to call a ASP.NET Core RESTful service.
 
 ### Using Webpack
 
-1. Do a global search and replace in the project to comment out all references to moduleId in each component since it isn't used by webpack:        
-     Find: moduleId: module.id,
-
-     Replace with: //moduleId: module.id,
-
-1. Run `npm run webpack-build-watch`
+1. Run `npm run build`
 
 1. The webpack bundle scripts will be added into wwwroot/devDist. Open Views/Shared/_Layout.cshtml and remove the scripts in the head section. Add references to the scripts in wwwroot/devDist to the bottom of _Layout.cshtml (above the closing body tag).
 
-1. To run AOT, set your NODE_ENV variable to `production` and re-run `npm run webpack-build-watch`. You'll need to change the script references in _Layout.cshtml from the devDist to the dist folder.
+1. To run AOT, set your NODE_ENV variable to `production` and re-run `npm run build`. You'll need to change the script references in _Layout.cshtml from the devDist to the dist folder.
 
 ### Why Isn't the Angular CLI Used for this Project?
 

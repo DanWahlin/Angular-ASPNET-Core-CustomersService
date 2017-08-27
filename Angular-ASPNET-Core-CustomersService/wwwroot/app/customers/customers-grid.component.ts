@@ -5,7 +5,6 @@ import { Sorter } from '../core/sorter';
 import { TrackByService } from '../core/trackby.service';
 
 @Component({ 
-  moduleId: module.id,
   selector: 'customers-grid', 
   templateUrl: './customers-grid.component.html',
   //When using OnPush detectors, then the framework will check an OnPush 
