@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:1.1.1-sdk
+FROM microsoft/aspnetcore-build
 
 MAINTAINER Dan Wahlin
 

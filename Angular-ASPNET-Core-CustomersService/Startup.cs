@@ -58,6 +58,7 @@ namespace Angular_ASPNETCore_CustomersService
             services.AddTransient<CustomersDbSeeder>();
 
             //https://github.com/domaindrivendev/Swashbuckle.AspNetCore
+            //https://localhost:5000/swagger
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info
