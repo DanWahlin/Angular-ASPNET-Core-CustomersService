@@ -5,7 +5,8 @@ This project demonstrates how Angular and ASP.NET Core can be used together.
 
 ## Software Requirements To Run Locally
 
-* Visual Studio 2017 Community (or higher) for Windows. Any editor on Mac.
+* Visual Studio 2017 15.3.3 Community (or higher) for Windows. Very important to have 15.3.3 or higher!
+* Any editor on Mac.
 * ASP.NET Core SDK 2.0 or higher - http://dot.net 
 * Node.js 6.10 or higher
 
