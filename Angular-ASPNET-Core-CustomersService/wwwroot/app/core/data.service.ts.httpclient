@@ -44,8 +44,7 @@ export class DataService {
     
     getCustomer(id: string) : Observable<ICustomer> {
         return this.http.get<ICustomer>(this.baseUrl + '/' + id)
-                    .map((customer) => customer)
-                    .catch(this.handleError);
+                   .catch(this.handleError);
     }
 
     insertCustomer(customer: ICustomer) : Observable<ICustomer> {
@@ -68,13 +67,11 @@ export class DataService {
 
     deleteCustomer(id: string) : Observable<boolean> {
         return this.http.delete<boolean>(this.baseUrl + '/' + id)
-                   .map((status) => status)
                    .catch(this.handleError);
     }
    
     getStates(): Observable<IState[]> {
         return this.http.get<IState[]>(this.baseStatesUrl)
-                   .map((states) => states)
                    .catch(this.handleError);
     }
 
