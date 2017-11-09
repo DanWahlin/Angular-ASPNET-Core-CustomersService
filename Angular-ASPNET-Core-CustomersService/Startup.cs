@@ -122,6 +122,7 @@ namespace Angular_ASPNETCore_CustomersService
                 corsPolicyBuilder.AllowAnyOrigin();
                 corsPolicyBuilder.AllowAnyMethod();
                 corsPolicyBuilder.AllowAnyHeader();
+                corsPolicyBuilder.WithExposedHeaders("X-InlineCount");
             });
 
             app.UseStaticFiles();
