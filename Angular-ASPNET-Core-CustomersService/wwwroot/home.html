@@ -12,11 +12,11 @@
     <title>Angular TypeScript App</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Angular">
+    <meta name="description" content="Angular 2">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css' />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/site.css" rel="stylesheet" />
-   
+    <link href="styles/styles.css" rel="stylesheet" />   
 </head>
 <body>
     <header class="navbar navbar-inner navbar-fixed-top">
@@ -28,10 +28,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img class="logo" src="images/codewithdanlogo.png" alt="logo" />
-                <div>
-                    <a href="/home" class="app-title">Angular/ASP.NET Core Seed Project</a>
-                </div>
+                <img src="images/people.png" alt="logo">
+                <a href="/home.html" class="app-title">Customer Manager</a>
             </div>
         </nav>
     </header>
@@ -47,20 +45,18 @@
         <div class="navbar navbar-fixed-bottom">
             <div class="navbar-inner footer">
                 <div class="container">
-                    <footer>
-                        <div class="row">
-                            <div class="col-md-12">
-                                Created by <a href="http://twitter.com/DanWahlin" target="_blank">Dan Wahlin</a>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            Created by <a href="http://twitter.com/DanWahlin" target="_blank">@@DanWahlin</a>
                         </div>
-                    </footer>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>    
+    </footer>
 
     <!-- Webpack will add scripts here dynamically -->
 
 
-<script type="text/javascript" src="/dist/polyfills.js"></script><script type="text/javascript" src="/dist/vendor.js"></script><script type="text/javascript" src="/dist/app.js"></script></body>
+<script type="text/javascript" src="/devDist/polyfills.js"></script><script type="text/javascript" src="/devDist/vendor.js"></script><script type="text/javascript" src="/devDist/app.js"></script></body>
 </html>

@@ -27,6 +27,7 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
         }),
+        new webpack.ContextReplacementPlugin(/\@angular(\\|\/)core(\\|\/)esm5/, path.join(__dirname, './client')),
         //Get settings here: https://github.com/jantimon/html-webpack-plugin
         new HtmlWebpackPlugin({
             template: './wwwroot/home.webpack-template.html',
