@@ -16,7 +16,7 @@ This project demonstrates how Angular and ASP.NET Core can be used together.
 
 1. Install Gulp: `npm install gulp -g`
 
-1. Run `npm install` to install app dependencies
+1. Run `npm install` to install app dependencies (make sure to run this in the folder where the package.json file lives)
 
 1. Run the following Gulp task to copy required Angular modules into the `wwwroot` folder: 
 
@@ -32,7 +32,7 @@ This project demonstrates how Angular and ASP.NET Core can be used together.
 
 1. Install Gulp: `npm install gulp -g`
 
-1. Run `npm install` to install app dependencies
+1. Run `npm install` to install app dependencies (make sure to run this in the folder where the package.json file lives)
 
 1. Run the following Gulp task to copy required Angular modules into the `wwwroot` folder: 
 
