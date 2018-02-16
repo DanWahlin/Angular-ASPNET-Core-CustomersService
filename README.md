@@ -22,7 +22,7 @@ This project demonstrates how Angular and ASP.NET Core can be used together.
 
     `gulp copy:libs`
 
-1. Start the application (F5)
+1. Build and run the application (F5)
 
 1. Browse to http://localhost:5000
 
