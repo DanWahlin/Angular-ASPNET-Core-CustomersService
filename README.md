@@ -48,4 +48,4 @@ This project demonstrates how Angular and ASP.NET Core can be used together.
 
     * Run `dotnet run`
 
-1. Browse to http://localhost:5000
+1. Browse to http://localhost:8000
