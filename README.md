@@ -1,3 +1,8 @@
+# Note
+
+A newer version of this project that uses the Angular CLI and the latest version of 
+Angular can be found here: https://github.com/DanWahlin/AngularCLI-ASPNET-Core-CustomersService
+
 # Angular, ASP.NET Core Customers Service Application
 
 This project demonstrates how Angular and ASP.NET Core can be used together.
