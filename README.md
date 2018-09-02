@@ -1,7 +1,16 @@
 # Note
 
-A newer version of this project that uses the Angular CLI and the latest version of 
-Angular can be found here: https://github.com/DanWahlin/AngularCLI-ASPNET-Core-CustomersService
+A version of this project that uses the Angular CLI and the latest version of 
+Angular can be found here: 
+
+https://github.com/DanWahlin/AngularCLI-ASPNET-Core-CustomersService
+
+This project has been updated to use the latest version of Angular and RxJS but does not use the Angular CLI (it uses System.js to load modules). Key changes from
+the Pluralsight course include:
+
+* HttpClientModule now used instead of HttpModule (since it's deprecated after Angular 4.3+)
+* HttpClient now used instead of Http (since it's deprecated after Angular 4.3+) 
+* RxJS chained operators such as map and catch have been changed to the new pipe() style of coding in the latest version of RxJS.
 
 # Angular, ASP.NET Core Customers Service Application
 
