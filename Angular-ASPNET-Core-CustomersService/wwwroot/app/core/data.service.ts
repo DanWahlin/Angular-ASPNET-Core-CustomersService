@@ -1,96 +1,94 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-//Grab everything with import 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/map'; 
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-import { ICustomer, IOrder, IState, IPagedResults } from '../shared/interfaces';
+import { ICustomer, IOrder, IState, IPagedResults, ICustomerResponse } from '../shared/interfaces';
+/* 
+    ##### PLEASE NOTE ######
 
+    1. This code has been updated to use the HttpClient service that's part of Angular 4.3+
+       Http and HttpModule have been deprecated
+    2. RxJS has been updated to the latest version which uses pipe() rather than operator chaining
+    3. The original file shown in the Pluralsight course is also available if you want it: data.service.ts.http
+    
+    #####
+*/
 @Injectable()
 export class DataService {
-
-    //If you're on Angular 4.3 or higher you can use HttpClientModule. See data.service.ts.httpclient
   
     baseUrl: string = '/api/customers';
     baseStatesUrl: string = '/api/states'
 
-    constructor(private http: Http) { 
+    constructor(private http: HttpClient) { 
 
     }
     
     getCustomers() : Observable<ICustomer[]> {
-        return this.http.get(this.baseUrl)
-                   .map((res: Response) => {
-                       let customers = res.json();
-                       this.calculateCustomersOrderTotal(customers);
-                       return customers;
-                   })
-                   .catch(this.handleError);
+        return this.http.get<ICustomer[]>(this.baseUrl)
+                   .pipe(
+                        map((customers: ICustomer[]) => {
+                            this.calculateCustomersOrderTotal(customers);
+                            return customers;
+                        }),
+                        catchError(this.handleError)
+                   );
+;
     }
 
     getCustomersPage(page: number, pageSize: number) : Observable<IPagedResults<ICustomer[]>> {
-        return this.http.get(`${this.baseUrl}/page/${page}/${pageSize}`)
-                    .map((res: Response) => {
+        return this.http.get<ICustomer[]>(`${this.baseUrl}/page/${page}/${pageSize}`, {observe: 'response'})
+                    .pipe(
+                        map((res) => {
+                        //Need to observe response in order to get to this header (see {observe: 'response'} above)
                         const totalRecords = +res.headers.get('x-inlinecount');
-                        let customers = res.json();
+                        let customers = res.body as ICustomer[];
                         this.calculateCustomersOrderTotal(customers);
                         return {
                             results: customers,
                             totalRecords: totalRecords
                         };
-                    })
-                    .catch(this.handleError);
+                        }),
+                        catchError(this.handleError)
+                    );
     }
     
     getCustomer(id: string) : Observable<ICustomer> {
-        return this.http.get(this.baseUrl + '/' + id)
-                    .map((res: Response) => res.json())
-                    .catch(this.handleError);
+        return this.http.get<ICustomer>(this.baseUrl + '/' + id)
+                   .pipe(catchError(this.handleError));
     }
 
     insertCustomer(customer: ICustomer) : Observable<ICustomer> {
-        return this.http.post(this.baseUrl, customer)
-                   .map((res: Response) => {
-                       const data = res.json();
-                       console.log('insertCustomer status: ' + data.status);
-                       return data.customer;
-                   })
-                   .catch(this.handleError);
+        return this.http.post<ICustomerResponse>(this.baseUrl, customer)
+                   .pipe(
+                        map((data) => {
+                            console.log('insertCustomer status: ' + data.status);
+                            return data.customer;
+                        }),
+                        catchError(this.handleError)
+                    );
     }
    
     updateCustomer(customer: ICustomer) : Observable<ICustomer> {
-        return this.http.put(this.baseUrl + '/' + customer.id, customer) 
-                   .map((res: Response) => {
-                       const data = res.json();
-                       console.log('updateCustomer status: ' + data.status);
-                       return data.customer;
-                   })
-                   .catch(this.handleError);
+        return this.http.put<ICustomerResponse>(this.baseUrl + '/' + customer.id, customer) 
+                   .pipe(
+                        map((data) => {
+                            console.log('updateCustomer status: ' + data.status);
+                            return data.customer;
+                        }),
+                        catchError(this.handleError)
+                    );
     }
 
     deleteCustomer(id: string) : Observable<boolean> {
-        return this.http.delete(this.baseUrl + '/' + id)
-                   .map((res: Response) => res.json().status)
-                   .catch(this.handleError);
+        return this.http.delete<boolean>(this.baseUrl + '/' + id)
+                   .pipe(catchError(this.handleError));
     }
-
-    //Not used but could be called to pass "options" (3rd parameter) to 
-    //appropriate POST/PUT/DELETE calls made with http
-    getRequestOptions() {
-        const csrfToken = ''; //would retrieve from cookie or from page
-        const options = new RequestOptions({
-            headers: new Headers({ 'x-xsrf-token': csrfToken })
-        });
-        return options;
-    }
-    
+   
     getStates(): Observable<IState[]> {
-        return this.http.get(this.baseStatesUrl)
-                   .map((res: Response) => res.json())
-                   .catch(this.handleError);
+        return this.http.get<IState[]>(this.baseStatesUrl)
+                   .pipe(catchError(this.handleError));
     }
 
     calculateCustomersOrderTotal(customers: ICustomer[]) {
@@ -105,15 +103,10 @@ export class DataService {
         }
     }
     
-    private handleError(error: any) {
+    private handleError(error: HttpErrorResponse) {
         console.error('server error:', error); 
-        if (error instanceof Response) {
-          let errMessage = '';
-          try {
-            errMessage = error.json().error;
-          } catch(err) {
-            errMessage = error.statusText;
-          }
+        if (error.error instanceof Error) {
+          let errMessage = error.error.message;
           return Observable.throw(errMessage);
           // Use the following instead if using lite-server
           //return Observable.throw(err.text() || 'backend server error');

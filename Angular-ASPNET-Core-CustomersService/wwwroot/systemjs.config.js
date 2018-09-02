@@ -19,7 +19,18 @@
         }
       }
     },
-    'rxjs':                 { defaultExtension: 'js' },
+    // Used with older version and RxJS 4
+    //'rxjs': { defaultExtension: 'js' },
+    
+    // Used with updated Angular 6/RxJS 6 version
+    'rxjs': {
+      'main': 'index.js',
+      'defaultExtension': 'js'
+    },
+    'rxjs/operators': {
+      'main': 'index.js',
+      'defaultExtension': 'js'
+    },
     'tslib':                { main: 'tslib', defaultExtension: 'js' },
     '@angular/common/http': { main: '../bundles/common-http.umd.js', defaultExtension: 'js' }
   };
