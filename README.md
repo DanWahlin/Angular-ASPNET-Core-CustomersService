@@ -1,7 +1,6 @@
 # Note
 
-A version of this project that uses the Angular CLI and the latest version of 
-Angular can be found here: 
+THIS PROJECT IS DEPRECATED and no longer maintained. A newer version of the project that uses the Angular CLI and the latest version of Angular can be found here: 
 
 https://github.com/DanWahlin/AngularCLI-ASPNET-Core-CustomersService
 
